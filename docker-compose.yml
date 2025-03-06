@@ -21,26 +21,23 @@ services:
       - "80:80"
       - "8080:8080"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#      - "/var/run/docker.sock:/var/run/docker.sock:ro" pour linux
+      -  ${XDG_RUNTIME_DIR:-/var/run}/docker.sock:/var/run/docker.sock:ro
 
   front:
     build: 
       context: ./Front
       dockerfile: front_V2.Dockerfile
-    networks:
-      - library-network
     env_file:
       - ./Front/.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.front.rule=Host(`front.localhost`)"
       - "traefik.http.routers.front.entrypoints=web"
-      - "traefik.http.services.front.loadbalancer.server.port=3000"
+      - "traefik.http.services.front.loadbalancer.server.port=80"
 
   back:
     build: ./Back
-    networks:
-      - library-network
     environment:
       - NODE_ENV=production
     labels:
@@ -56,6 +53,4 @@ services:
 #       - ./Front/build:/usr/share/nginx/html
 #     networks:
 #       - library-network
-networks:
-  library-network:
   
