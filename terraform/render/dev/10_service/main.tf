@@ -5,6 +5,8 @@ resource "render_web_service" "front" {
   runtime_source = {
     image = {
       image_url = var.front_registry_url
+      registry_credential_id = var.registry_credential_id
+      tag = "latest"
     }
   }
 }
@@ -16,6 +18,8 @@ resource "render_web_service" "back" {
   runtime_source = {
     image = {
       image_url = var.back_registry_url
+      registry_credential_id = var.registry_credential_id
+      tag = "latest"
     }
   }
 }
