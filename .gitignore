@@ -141,3 +141,8 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+./.idea
+*.tfvars
+terraform.exe
+.terraform
